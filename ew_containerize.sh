@@ -5,4 +5,4 @@
 #and connect with 
 #docker exec -it eworm /bin/bash
 dir=$(dirname $0)
-docker run -it --name eworm -v $dir/params:/eworm/run/params joncon/eworm:7.8 /bin/bash
+docker run -it --name eworm -v $dir/params:/eworm/run/params joncon/eworm:7.8 startstop

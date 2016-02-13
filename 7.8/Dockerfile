@@ -57,5 +57,9 @@ RUN cp /eworm/earthworm_$EW_VER/params/* /eworm/run/params \
   && cp /eworm/earthworm_$EW_VER/environment/earthworm_global.d /eworm/run/params \
   && cp /eworm/earthworm_$EW_VER/environment/earthworm_commonvars.d /eworm/run/params
 
-VOLUME /eworm/run/params
-CMD [/eworm/earthworm_7.8/bin/startstop]
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+WORKDIR /eworm/run/params
+
+ENTRYPOINT ["/entrypoint.sh"]
