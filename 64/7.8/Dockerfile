@@ -6,9 +6,9 @@ ENV EW_VER 7.8
 
 #install packages
 RUN yum update -y && yum install -y glibc-devel.i686 \
-  libgcc.i686 \
-  libstdc++-devel.i686 \
-  libgfortran.i686 \
+  libgcc \
+  libstdc++-devel \
+  libgfortran \
   gcc \
   gcc-fortran.x86_64 \
   libgfortran.x86_64 \
@@ -25,7 +25,7 @@ RUN mkdir -p /eworm/run/params \
   /eworm/run/log \
   /eworm/tankfiles
 
-#get ew and unzip
+#get ew and unzipd
 RUN cd /eworm \
   && wget http://folkworm.ceri.memphis.edu/ew-dist/v$EW_VER/earthworm_$EW_VER-src.tar.gz \
   && tar -xzvf earthworm_$EW_VER-src.tar.gz
@@ -34,7 +34,7 @@ ENV EW_LINUX_FILE=/eworm/earthworm_$EW_VER/environment/ew_linux.bash
 
 #edit environment
 RUN sed -i -e s/run_working/run/g $EW_LINUX_FILE \
-  && sed -i -e 's/^export GLOBALFLAGS.*/export GLOBALFLAGS="-fno-stack-protector -m32 -Dlinux -D__i386 -D_LINUX -D_INTEL -D_USE_SCHED  -D_USE_PTHREADS -D_USE_TERMIOS -I${EW_HOME}\/${EW_VERSION}\/include"/' $EW_LINUX_FILE \
+  && sed -i -e 's/^export GLOBALFLAGS.*/export GLOBALFLAGS="-fno-stack-protector -Dlinux -D_LINUX -D_INTEL -D_USE_SCHED  -D_USE_PTHREADS -D_USE_TERMIOS -I${EW_HOME}\/${EW_VERSION}\/include"/' $EW_LINUX_FILE \
   && sed -i -e 's/^export EW_HOME=.*/export EW_HOME="${EW_INSTALL_HOME:-\/eworm}"/' $EW_LINUX_FILE \
   && cp $EW_LINUX_FILE /eworm/run/params
   
